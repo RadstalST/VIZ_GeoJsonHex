@@ -6,7 +6,11 @@ from connections import connections
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-origins = ["*"]
+origins = [
+    "*",
+    "http://localhost",
+    "http://localhost:8080",
+    "http://localhost:8081",]
 
 app.add_middleware(
     CORSMiddleware,
@@ -45,4 +49,4 @@ async def aggregate_data(size:int=1):
     gdf_join = gpd.sjoin(gdf_data, gdf_geometry, how="inner", op="within")
     gdf_agg = gdf_join.groupby("partition").agg({"value": "sum"})
     redis.set(f"agg_{size}", gdf_agg.to_json())
-    return {"message": redis.get(f"agg_{size}")}
+    return {"message": "success"}

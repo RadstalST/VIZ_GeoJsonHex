@@ -65,12 +65,19 @@ class MapViz {
     
   }
   async get_data() {
+
+  
+
+    
+    const size = this.config["btnradio"]
+    console.log("fetching",size);
     const result = await $.ajax({
-      url: "http://127.0.0.1:8000/heatmaps?size=1&data=true&map=true",
+      url: "http://127.0.0.1:8000/heatmaps?size="+size+"&data=true&map=true",
       crossDomain: true,
       dataType: 'json',
       async: true,
       success: function (data) {
+        console.log("fetched",size);
         return data;
       },
       error: function (xhr, status) {
@@ -103,6 +110,13 @@ class MapViz {
 
         if(old_config["btnradio"] != this.config["btnradio"]){
           //fetch new data
+          this.get_data().then((result) => {
+            this.geo_data = result["geojson_data"];
+            this.agg_data = result["agg_data"];
+            this.map.data.addGeoJson(this.geo_data);
+            this.map.data.setStyle(this.vizStyle);
+          })
+
         }
         
       }

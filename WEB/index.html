@@ -68,7 +68,19 @@
         <div id="map">
 
         </div>
-        
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body">
+                Hello, world! This is a toast message.
+              </div>
+            </div>
+          </div>
         <div id="ui_overlay_right">
             <div class="accordion" id="accordionExample2">
                 <div class="accordion-item">
@@ -272,16 +284,17 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="map_scale" class="form-label">Hex Scale (km)</label>
+                                            <label for="map_scale" class="form-label">Hex Scale (km) (some are disabled)</label>
+                                            
                                             <br>
                                             <div id="map_scale" class="btn-group" role="group"
                                                 aria-label="Basic radio toggle button group">
                                                 <input type="radio" class="btn-check" name="btnradio" id="btnradio0"
-                                                    autocomplete="off" value="0.5">
+                                                    autocomplete="off" value="0.5" disabled>
                                                 <label class="btn btn-outline-primary" for="btnradio0">0.5</label>
         
                                                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                                    autocomplete="off" checked value="1">
+                                                    autocomplete="off" checked value="1" disabled>
                                                 <label class="btn btn-outline-primary" for="btnradio1">1</label>
         
                                                 <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
