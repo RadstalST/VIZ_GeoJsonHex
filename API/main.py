@@ -1,9 +1,13 @@
+import dotenv
+dotenv.load_dotenv()
+
 from fastapi import FastAPI
 import geopandas as gpd
 import pandas as pd
 import json
 from connections import connections
 from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 origins = [

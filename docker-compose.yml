@@ -8,7 +8,21 @@ services:
     command: redis-server --save 20 1 --loglevel warning 
     volumes: 
       - cache:/data
-
+  cachingapi:
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '8000:8000'
+    depends_on:
+      - cache
+    environment:
+      - REDIS_HOST=cache
+      - REDIS_PORT=6379
+    volumes:
+      - ./DATA:/code/DATA
+      - ./geojson:/code/geojson
 volumes:
   cache:
     driver: local

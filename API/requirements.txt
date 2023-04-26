@@ -1,3 +1,6 @@
-fastapi[all]
+numpy
+pandas
 geopandas
+fastapi[all]
 redis[hiredis]
+uvicorn
