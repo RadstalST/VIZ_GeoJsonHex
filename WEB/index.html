@@ -1,0 +1,355 @@
+<head>
+    <meta charset="utf-8">
+    <title>Hexagon Grid</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script type="text/javascript"
+        src="http://maps.google.com/maps/api/js?key=AIzaSyB4RLeBXOFj3a_oUEXKpinn4GxV9HgoHSM&v=beta"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.5/js.cookie.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- <script type="text/javascript" src="hexbin.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #map_container {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* #ui_overlay {
+            position: absolute;
+            top: 1em;
+            left: 1em;
+            width: 100%;
+            max-width: 25vw;
+            min-width: 15vw;
+            max-height: 90vh;
+
+        } */
+
+        #ui_overlay_right {
+            position: absolute;
+            top: 1em;
+            right: 1em;
+            width: 100%;
+            max-width: 20rem;
+            min-width: 15rem;
+            max-height: 90vh;
+
+        }
+
+        .accordion {
+            overflow-y: scroll;
+            max-height: 90vh !important;
+        }
+
+        /* .accordion-collapse {
+            overflow-y: scroll;
+            max-height: 70% !important;
+        } */
+    </style>
+</head>
+
+<body>
+    <div id="map_container">
+        <div id="map">
+
+        </div>
+        
+        <div id="ui_overlay_right">
+            <div class="accordion" id="accordionExample2">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Search
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample2">
+                        <div class="accordion-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Search</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp">
+                                </div>
+                                <button type="button" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                        <div class="accordion-body" style="max-height:50vh ;overflow-y: scroll;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">First</th>
+                                        <th scope="col">Last</th>
+                                        <th scope="col">Handle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree1" aria-expanded="false" aria-controls="collapseThree1">
+                            Configurations
+                        </button>
+                    </h2>
+                    <div id="collapseThree1" class="accordion-collapse collapse" data-bs-parent="#accordionExample2">
+                        <div class="accordion-body">
+                            
+                            <br>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+                              </div>
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                              </div>
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDisabled" disabled>
+                                <label class="form-check-label" for="flexSwitchCheckDisabled">Disabled switch checkbox input</label>
+                              </div>
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckCheckedDisabled" checked disabled>
+                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled">Disabled checked switch checkbox input</label>
+                              </div>
+                              <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                Toggle some shit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div>
+                Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+              </div>
+              <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                  Dropdown button
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+                <div id="ui_overlay">
+                    <div class="accordion" id="accordionExample">
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Map Options
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <form id="map_config">
+                                        <div class="mb-3">
+                                            <label class="form-label">Starting Geo Spatial Coordinate</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">lat</span>
+                                                <input id="config_lat" name="config_lat" type="number"  step=any class="form-control" aria-label="latitude">
+                                                <span class="input-group-text">long</span>
+                                                <input id="config_long" name="config_long" type="number" step=any class="form-control" aria-label="longtitude">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="customRange2" class="form-label">Overlay Opacity</label>
+                                            
+                                            <input type="range" id="config_opacity" name="config_opacity" class="form-range" min="0" max="1" step="0.01" id="customRange2">
+
+                                            
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="map_scale" class="form-label">Hex Scale (km)</label>
+                                            <br>
+                                            <div id="map_scale" class="btn-group" role="group"
+                                                aria-label="Basic radio toggle button group">
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio0"
+                                                    autocomplete="off" value="0.5">
+                                                <label class="btn btn-outline-primary" for="btnradio0">0.5</label>
+        
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                                                    autocomplete="off" checked value="1">
+                                                <label class="btn btn-outline-primary" for="btnradio1">1</label>
+        
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                                    autocomplete="off"  checked value="2">
+                                                <label class="btn btn-outline-primary" for="btnradio2">2</label>
+        
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                                                    autocomplete="off" value="3" >
+                                                <label class="btn btn-outline-primary" for="btnradio3">3</label>
+        
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
+                                                    autocomplete="off" value="5">
+                                                <label class="btn btn-outline-primary" for="btnradio4">5</label>
+        
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio5"
+                                                    autocomplete="off" value="10">
+                                                <label class="btn btn-outline-primary" for="btnradio5">10</label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Apply</button>
+                                        <button type="reset" class="btn btn-secondary">Reset</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Configurations
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the
+                                    collapse plugin adds the appropriate classes that we use to style each element. These
+                                    classes control the overall appearance, as well as the showing and hiding via CSS
+                                    transitions. You can modify any of this with custom CSS or overriding our default variables.
+                                    It's also worth noting that just about any HTML can go within the
+                                    <code>.accordion-body</code>, though the transition does limit overflow.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    
+    <script type="text/javascript" src="./index.js"></script>
+    <script type="text/javascript" src="./map.js"></script>
+    <script type="text/javascript">
+        window.initMapConfig()
+        var map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: -37.8362108, lng: 144.9948872 },
+            zoom: 8,
+            mapId: "caef4af3387e9937", // <YOUR_MAP_ID_HERE>,
+            disableDefaultUI: true,
+        });
+
+        var map_viz = new window.MapViz(map)
+        function preventDefault(e) {
+            e.preventDefault();
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+</body>
